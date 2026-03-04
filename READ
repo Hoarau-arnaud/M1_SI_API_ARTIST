@@ -1,0 +1,30 @@
+POST http://localhost:8081/api/artists
+Body JSON :
+
+{
+  "prenom": "Christopher",
+  "nom": "Nolan",
+  "age": 54,
+  "genre": "M",
+  "estActeur": false,
+  "estRealisateur": true,
+  "bio": "Réalisateur"
+}
+
+{
+  "prenom": "Leonardo",
+  "nom": "DiCaprio",
+  "age": 50,
+  "genre": "M",
+  "estActeur": true,
+  "estRealisateur": false
+}
+
+{
+  "prenom": "Elliot",
+  "nom": "Page",
+  "age": 38,
+  "genre": "M",
+  "estActeur": true,
+  "estRealisateur": false
+}

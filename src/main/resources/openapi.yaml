@@ -1,138 +1,130 @@
 openapi: 3.0.3
 info:
-  title: API de Gestion des Chiens
-  description: |
-    API REST permettant la gestion des chiens dans le système.
-    Cette API permet de créer, lire, mettre à jour et supprimer des informations sur les chiens.
+  title: Artist API
   version: 1.0.0
-  contact:
-    name: Support API
-    email: support@example.com
+  description: API de gestion des artistes (acteurs / réalisateurs)
 
 servers:
-  - url: http://localhost:8080
-    description: Serveur de développement local
+  - url: http://localhost:8081
 
 tags:
-  - name: dogs
-    description: Opérations liées à la gestion des chiens
+  - name: artists
+    description: Gestion des artistes
 
 paths:
-  /dogs:
+  /api/artists:
     get:
-      tags:
-        - dogs
-      summary: Récupère tous les chiens
-      description: Retourne la liste complète des chiens enregistrés dans le système
-      operationId: getAllDogs
+      tags: [artists]
+      summary: Liste des artistes
       responses:
-        '200':
-          description: Liste des chiens récupérée avec succès
+        "200":
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/DogDto'
-        '500':
-          description: Erreur serveur interne
-
+                  $ref: "#/components/schemas/ArtistDto"
     post:
-      tags:
-        - dogs
-      summary: Crée un nouveau chien
-      description: Ajoute un nouveau chien dans le système
-      operationId: createDog
+      tags: [artists]
+      summary: Créer un artiste
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DogDto'
+              $ref: "#/components/schemas/ArtistDto"
       responses:
-        '201':
-          description: Chien créé avec succès
+        "200":
+          description: OK (créé)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DogDto'
-        '400':
-          description: Données invalides
-        '500':
-          description: Erreur serveur interne
+                $ref: "#/components/schemas/ArtistDto"
 
-  /dogs/{id}:
+  /api/artists/{id}:
     get:
-      tags:
-        - dogs
-      summary: Récupère un chien par son ID
-      description: Retourne les détails d'un chien spécifique
-      operationId: getDogById
+      tags: [artists]
+      summary: Détail artiste
       parameters:
         - name: id
           in: path
-          description: ID du chien à récupérer
           required: true
-          schema:
-            type: integer
-            format: int64
+          schema: { type: integer, format: int64 }
       responses:
-        '200':
-          description: Chien trouvé
+        "200":
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DogDto'
-        '404':
-          description: Chien non trouvé
-        '500':
-          description: Erreur serveur interne
-
-    delete:
-      tags:
-        - dogs
-      summary: Supprime un chien
-      description: Supprime un chien du système par son ID
-      operationId: deleteDog
+                $ref: "#/components/schemas/ArtistDto"
+        "404":
+          description: Non trouvé
+    put:
+      tags: [artists]
+      summary: Modifier un artiste
       parameters:
         - name: id
           in: path
-          description: ID du chien à supprimer
           required: true
-          schema:
-            type: integer
-            format: int64
+          schema: { type: integer, format: int64 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtistDto"
       responses:
-        '200':
-          description: Chien supprimé avec succès
+        "200":
+          description: OK (modifié)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtistDto"
+    delete:
+      tags: [artists]
+      summary: Supprimer un artiste
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, format: int64 }
+      responses:
+        "200":
+          description: OK
           content:
             application/json:
               schema:
                 type: boolean
-        '404':
-          description: Chien non trouvé
-        '500':
-          description: Erreur serveur interne
 
 components:
   schemas:
-    DogDto:
+    ArtistDto:
       type: object
-      description: Représentation d'un chien dans le système
       properties:
         id:
           type: integer
           format: int64
-          description: Identifiant unique du chien
-          example: 1
-        name:
+          nullable: true
+        prenom:
           type: string
-          description: Nom du chien
-          example: "Rex"
-        race:
+        nom:
           type: string
-          description: Race du chien
-          example: "Berger Allemand"
+        age:
+          type: integer
+          nullable: true
+        genre:
+          type: string
+          nullable: true
+        estActeur:
+          type: boolean
+          nullable: true
+        estRealisateur:
+          type: boolean
+          nullable: true
+        bio:
+          type: string
+          nullable: true
       required:
-        - name
-        - race 
+        - prenom
+        - nom
