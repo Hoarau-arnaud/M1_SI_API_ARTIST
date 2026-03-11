@@ -40,4 +40,9 @@ public class ArtistController {
     public Boolean delete(@PathVariable("id") Long id) {
         return artistService.deleteArtist(id);
     }
+    
+    
+    
+    
+    
 }
